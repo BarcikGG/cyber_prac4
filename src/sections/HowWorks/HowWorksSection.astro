@@ -1,0 +1,317 @@
+<section class="container" id="works">
+    <h1 class="title">Как работает платформа</h1>
+
+    <div class="steps-container">
+        <div class="info-block circle-block">
+            <div class="circle-container">
+                <svg class="circle-svg" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="gradient-01" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#8752FA;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#CD82FF;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradient-02" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#232323;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#555555;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradient-03" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#333333;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradient-04" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#DCFFAE;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#8FD639;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="gradient-05" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#404040;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#2a2a2a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <!-- Segment 01 (20%) -->
+                    <circle class="segment segment-01 active-segment" cx="100" cy="100" r="80" 
+                            stroke-dasharray="100.53 402.12" 
+                            stroke-dashoffset="0" />
+                    
+                    <!-- Segment 02 (20%) -->
+                    <circle class="segment segment-02" cx="100" cy="100" r="80" 
+                            stroke-dasharray="100.53 402.12" 
+                            stroke-dashoffset="-100.53" />
+                    
+                    <!-- Segment 03 (20%) -->
+                    <circle class="segment segment-03" cx="100" cy="100" r="80" 
+                            stroke-dasharray="100.53 402.12" 
+                            stroke-dashoffset="-201.06" />
+                    
+                    <!-- Segment 04 (20%) -->
+                    <circle class="segment segment-04" cx="100" cy="100" r="80" 
+                            stroke-dasharray="100.53 402.12" 
+                            stroke-dashoffset="-301.59" />
+                    
+                    <!-- Segment 05 (20%) -->
+                    <circle class="segment segment-05" cx="100" cy="100" r="80" 
+                            stroke-dasharray="100.53 402.12" 
+                            stroke-dashoffset="-402.12" />
+                </svg>
+                
+                <div class="center-content">
+                    <h1 class="center-title">SENTRA</h1>
+                    <p class="center-subtitle">Continuous Threat Exposure<br>Management</p>
+                </div>
+                
+                
+                <div class="segment-label label-01" data-segment="01">01</div>
+                <div class="segment-label label-02" data-segment="02">02</div>
+                <div class="segment-label label-03" data-segment="03">03</div>
+                <div class="segment-label label-04" data-segment="04">04</div>
+                <div class="segment-label label-05" data-segment="05">05</div>
+            </div>
+
+            <div class="flash flash-01 active-light"></div>
+            <div class="flash flash-02"></div>
+            <div class="flash flash-03"></div>
+            <div class="flash flash-04"></div>
+            <div class="flash flash-05"></div>
+        </div>
+
+        <div class="info-block">
+            <div class="step-numbers">
+                <span class="step active">
+                    01 <span class="step-title"> - Scoping</span>
+                </span>
+                <span class="step">
+                    02 <span class="step-title"> - Discovery</span>
+                </span>
+                <span class="step">
+                    03 <span class="step-title"> - Prioritization</span>
+                </span>
+                <span class="step">
+                    04 <span class="step-title"> - Validation</span>
+                </span>
+                <span class="step">
+                    05 <span class="step-title"> - Mobilization</span>
+                </span>
+            </div>
+
+            <div class="info">
+                <h1 id="step-title">Обнаружение активов<br/>(IP-адресов и доменов)</h1>
+                <p id="step-description">Непрерывный автоматизированный поиск и обнаружение всех цифровых активов (в том числе теневых). Формирование полной и актуальной карты инфраструктуры.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @import './Works.module.scss';
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('works');
+        const steps = document.querySelectorAll('.step-numbers .step');
+        const segments = document.querySelectorAll('.segment');
+        const flashes = document.querySelectorAll('.flash');
+        const stepTitle = document.getElementById('step-title');
+        const stepDescription = document.getElementById('step-description');
+        const scrollHint = document.getElementById('scrollHint');
+        
+        let currentStep = 0;
+        let isLocked = false;
+        let isStepScrollActive = false;
+        let scrollAccumulator = 0; // Накопитель для силы скролла
+        const scrollThreshold = 30; // Минимальная сила скролла для переключения
+        
+        // Данные для каждого шага
+        const stepData = [
+            {
+                title: "Обнаружение активов<br/>(IP-адресов и доменов)",
+                description: "Непрерывный автоматизированный поиск и обнаружение всех цифровых активов (в том числе теневых). Формирование полной и актуальной карты инфраструктуры."
+            },
+            {
+                title: "Поиск угроз безопасности", 
+                description: "Анализ активов с помощью автоматизированных инструментов, AI/ML-алгоритмов и внешних источников данных (OSINT). Поиск угроз безопасности по внутренней и публичным базам данных."
+            },
+            {
+                title: "Анализ и приоритизация",
+                description: "Оценка рисков и приоритезация наиболее критичных активов и уязвимостей, которые с наибольшей вероятностью будут использованы против организации."
+            },
+            {
+                title: "Верификация угроз", 
+                description: "Автоматическая и ручная верификация всех угроз для исключения ложноположительных срабатываний. Это позволяет сосредоточиться только на реальных рисках."
+            },
+            {
+                title: "Устранение угроз и мониторинг",
+                description: "Выработка наиболее релевантных рекомендаций. Автоматизированная и ручная проверка устранения угроз безопасности. Мониторинг изменений и контроль остаточного риска."
+            }
+        ];
+
+        function setActiveStep(idx: number) {
+            if (idx === currentStep) return;
+            
+            currentStep = idx;
+            
+            // Обновляем активные классы с плавной анимацией
+            steps.forEach((el, i) => {
+                if (i === idx) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+            
+            segments.forEach((el, i) => {
+                if (i === idx) {
+                    el.classList.add('active-segment');
+                } else {
+                    el.classList.remove('active-segment');
+                }
+            });
+            
+            flashes.forEach((el, i) => {
+                if (i === idx) {
+                    el.classList.add('active-light');
+                } else {
+                    el.classList.remove('active-light');
+                }
+            });
+
+            // Обновляем контент с анимацией
+            if (stepData[idx] && stepTitle && stepDescription) {
+                // Добавляем анимацию появления
+                stepTitle.style.animation = 'none';
+                stepDescription.style.animation = 'none';
+                
+                // Принудительный перерисовка
+                stepTitle.offsetHeight;
+                stepDescription.offsetHeight;
+                
+                stepTitle.innerHTML = stepData[idx].title;
+                stepDescription.innerHTML = stepData[idx].description;
+                
+                // Запускаем анимацию
+                stepTitle.style.animation = 'fadeInUp 0.3s ease-out';
+                stepDescription.style.animation = 'fadeInUp 0.3s ease-out';
+            }
+        }
+
+        function isContainerFullyVisible() {
+            if (!container) return false;
+            
+            const rect = container.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Более точная проверка видимости
+            return rect.top <= 100 && rect.bottom >= windowHeight - 100;
+        }
+
+        function smoothScrollToNext() {
+            // Плавный скролл вниз после завершения шагов
+            const scrollDistance = window.innerHeight * 0.8;
+            window.scrollTo({
+                top: window.scrollY + scrollDistance,
+                behavior: 'smooth'
+            });
+        }
+
+        function smoothScrollToPrev() {
+            // Плавный скролл вверх перед началом шагов
+            const scrollDistance = window.innerHeight * 0.8;
+            window.scrollTo({
+                top: window.scrollY - scrollDistance,
+                behavior: 'smooth'
+            });
+        }
+
+        function handleWheel(e: any) {
+            const containerVisible = isContainerFullyVisible();
+            
+            // Показываем/скрываем подсказку
+            if (scrollHint) {
+                scrollHint.classList.toggle('hidden', !containerVisible);
+            }
+            
+            if (isLocked) {
+                e.preventDefault();
+                return;
+            }
+            
+            if (!containerVisible) {
+                isStepScrollActive = false;
+                scrollAccumulator = 0;
+                return;
+            }
+
+            // Активируем режим пошагового скролла
+            isStepScrollActive = true;
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Накапливаем силу скролла для более плавного переключения
+            scrollAccumulator += Math.abs(e.deltaY);
+            
+            if (scrollAccumulator < scrollThreshold) {
+                return; // Недостаточно силы для переключения
+            }
+            
+            // Сбрасываем накопитель
+            scrollAccumulator = 0;
+
+            if (e.deltaY > 0) {
+                // Скролл вниз
+                if (currentStep < stepData.length - 1) {
+                    setActiveStep(currentStep + 1);
+                    isLocked = true;
+                    setTimeout(() => { isLocked = false; }, 400);
+                } else {
+                    // На последнем шаге - плавный переход дальше
+                    isStepScrollActive = false;
+                    isLocked = true;
+                    setTimeout(() => {
+                        smoothScrollToNext();
+                        setTimeout(() => { isLocked = false; }, 400);
+                    }, 200);
+                }
+            } else if (e.deltaY < 0) {
+                // Скролл вверх
+                if (currentStep > 0) {
+                    setActiveStep(currentStep - 1);
+                    isLocked = true;
+                    setTimeout(() => { isLocked = false; }, 400);
+                } else {
+                    // На первом шаге - плавный переход назад
+                    isStepScrollActive = false;
+                    isLocked = true;
+                    setTimeout(() => {
+                        smoothScrollToPrev();
+                        setTimeout(() => { isLocked = false; }, 400);
+                    }, 200);
+                }
+            }
+        }
+
+        // Обработчик скролла с пассивным режимом по умолчанию
+        let wheelHandler = function(e: any) {
+            if (isContainerFullyVisible() || isLocked) {
+                handleWheel(e);
+            }
+        };
+
+        document.addEventListener('wheel', wheelHandler, { passive: false });
+
+        // Отслеживаем изменения видимости секции
+        window.addEventListener('scroll', () => {
+            if (!isContainerFullyVisible() && isStepScrollActive) {
+                isStepScrollActive = false;
+                scrollAccumulator = 0;
+            }
+        });
+
+        // Инициализация
+        setActiveStep(0);
+        
+        // Сбрасываем накопитель при отпускании мыши
+        document.addEventListener('mouseup', () => {
+            scrollAccumulator = 0;
+        });
+    });
+</script>

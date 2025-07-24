@@ -1,0 +1,27 @@
+---
+export interface Props {
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const { icon, title, description } = Astro.props;
+---
+
+<article class="card">
+  <div class="icon_box">
+    <span class=`icon ${icon}`/>
+  </div>
+
+  <div class="info">
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+</article>
+
+<style>
+  @import './advantage.module.scss';
+</style>
+
+<script>
+</script>

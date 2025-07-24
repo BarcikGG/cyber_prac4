@@ -1,0 +1,70 @@
+@import '@styles/variables.scss';
+
+.protect-section {
+  position: relative;
+}
+
+.title_wrapper {
+    max-width: 700px;
+    height: 100vh;
+    justify-self: center;
+    align-content: center;
+
+    h1 {
+        font-size: 70px;
+        font-weight: 600;
+        color: $main-white;
+        text-align: center;
+        line-height: 1.2;
+        
+        // Подготовка для градиентного эффекта
+        position: relative;
+        z-index: 1;
+        
+        // Оптимизация для производительности
+        will-change: background, color;
+        transform: translateZ(0);
+        
+        // Сглаживание шрифта для лучшего качества
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        
+        // Поддержка background-clip для всех браузеров
+        -webkit-background-clip: text;
+        background-clip: text;
+        
+        // Убираем выделение для лучшего UX
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+    }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .title_wrapper {
+    max-width: 90%;
+    padding: 0 20px;
+    
+    h1 {
+      font-size: 48px;
+      line-height: 1.1;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .title_wrapper {
+    h1 {
+      font-size: 36px;
+    }
+  }
+}
+
+// Fallback для браузеров без поддержки background-clip
+@supports not (background-clip: text) {
+  .title_wrapper h1 {
+    color: $main-white !important;
+    background: none !important;
+  }
+}

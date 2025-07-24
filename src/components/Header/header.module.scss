@@ -1,0 +1,202 @@
+@import '@styles/mixins';
+@import '@styles/variables';
+
+header {
+  top: 0;
+  left: 0;
+  position: fixed;
+  width: 100%;
+  background-color: $main-black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px 20px 5px 20px;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.5s cubic-bezier(0.4,0,0.2,1);
+
+  nav {
+    display: flex;
+    gap: 12px;
+    transition: opacity $transition-normal, transform $transition-normal;
+  }
+
+  &.header--hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // Состояние когда меню открыто
+  &.menu-open {
+    position: static;
+    
+    nav {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+
+    .logo {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-10px);
+      pointer-events: none;
+    }
+
+    .menu_button {
+      .menu_button_icon {
+        background-image: url('/src/assets/icons/close_icon.svg');
+      }
+    }
+  }
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity $transition-normal, transform $transition-normal;
+}
+
+.menu_button {
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1001;
+  
+  @include outline_button();
+
+  span:last-child {
+    transition: opacity $transition-normal, transform $transition-normal;
+  }
+
+  &:hover {
+    background: $main-black;
+    border: 1px solid $main-white;
+
+    .menu_button_icon {
+      transform: scaleY(0.6);
+    }
+  }
+}
+
+.menu_button_icon {
+  margin-right: 18px;
+  width: 18px;
+  height: 14px;
+  transition: transform $transition-normal;
+
+  @include back_img('/src/assets/icons/menu_icon.svg');
+}
+
+.tg_button {
+  @include outline_button(13px, 13px);
+}
+
+.tg_button_icon {
+  width: 20px;
+  height: 20px;
+  @include back_img('/src/assets/icons/Telegram.svg');
+}
+
+.pilot_button {
+  font-size: 14px;
+  font-weight: 500;
+  
+  @include outline_button();
+}
+
+// Основное меню
+.main-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: $main-black;
+  z-index: 998;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: opacity $transition-slow, visibility $transition-slow, transform $transition-slow;
+  overflow: hidden;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+// Фоновый узор
+.menu-pattern {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0.3;
+  transition: all 0.1s ease;
+  pointer-events: none;
+
+  .pattern {
+    width: 100%;
+    height: 100%;
+    @include back_img('/src/assets/icons/pattern.svg');
+    background-size: cover;
+  }
+}
+
+// Навигация меню
+.menu-nav {
+  position: relative;
+  z-index: 1001;
+  text-align: left;
+  padding-bottom: 100px;
+  padding-right: 120px;
+  
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      &.animate {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      // // Задержка анимации для каждого пункта
+      // &:nth-child(1) { transition-delay: 0.1s; }
+      // &:nth-child(2) { transition-delay: 0.2s; }
+      // &:nth-child(3) { transition-delay: 0.3s; }
+      // &:nth-child(4) { transition-delay: 0.4s; }
+    }
+    
+    a {
+      color: $text-white;
+      text-decoration: none;
+      font-size: 42px;
+      font-weight: 500;
+      transition: opacity $transition-normal;
+      position: relative;
+      z-index: 1002;
+      opacity: .4;
+      
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

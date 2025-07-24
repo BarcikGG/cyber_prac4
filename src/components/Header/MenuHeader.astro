@@ -1,0 +1,171 @@
+<header id="main-header">
+  <button class="menu_button" id="menu-toggle">
+    <span class="menu_button_icon"></span>
+    <span>МЕНЮ</span>
+  </button>
+  <img src="src/assets/icons/Logo.svg" alt="SENTRA" class="logo">
+  <nav>
+    <button class="tg_button">
+      <span class="tg_button_icon"></span>
+    </button>
+    <button class="pilot_button">Запросить пилот</button>
+  </nav>
+</header>
+
+<!-- Основное меню -->
+<div class="main-menu" id="main-menu">
+  <!-- Фоновый узор -->
+  <div class="menu-pattern" id="menu-pattern">
+    <span class="pattern"></span>
+  </div>
+  
+  <nav class="menu-nav">
+    <ul>
+      <li><a href="#advantages">Преимущества</a></li>
+      <li><a href="#functional">Функционал</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contacts">Контакты</a></li>
+    </ul>
+  </nav>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const mainHeader = document.getElementById('main-header');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const mainMenu = document.getElementById('main-menu');
+  const menuPattern = document.getElementById('menu-pattern');
+  const menuItems = document.querySelectorAll('.menu-nav li');
+  
+  let isMenuOpen = false;
+
+  // --- СКРЫТИЕ ХЕДЕРА ПРИ СКРОЛЛЕ ---
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  function onScroll() {
+    if (!mainHeader) return;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > lastScrollY && window.scrollY > 50) {
+          mainHeader.classList.add('header--hidden');
+        } else {
+          mainHeader.classList.remove('header--hidden');
+        }
+        lastScrollY = window.scrollY;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll);
+  // --- КОНЕЦ СКРЫТИЯ ХЕДЕРА ---
+
+  // Функция открытия/закрытия меню
+  function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+    
+    if (isMenuOpen) {
+      // Открываем меню
+      if (mainHeader) mainHeader.classList.add('menu-open');
+      if (menuOverlay) menuOverlay.classList.add('active');
+      if (mainMenu) mainMenu.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Анимация появления пунктов меню
+      setTimeout(() => {
+        menuItems.forEach(item => {
+          item.classList.add('animate');
+        });
+      }, 200);
+      
+    } else {
+      // Закрываем меню
+      if (mainHeader) mainHeader.classList.remove('menu-open');
+      if (menuOverlay) menuOverlay.classList.remove('active');
+      if (mainMenu) mainMenu.classList.remove('active');
+      document.body.style.overflow = '';
+      
+      // Убираем анимацию пунктов меню
+      menuItems.forEach(item => {
+        item.classList.remove('animate');
+      });
+    }
+  }
+
+  // Обработчики событий
+  if (menuToggle) {
+    menuToggle.addEventListener('click', toggleMenu);
+  }
+  
+  // Закрытие меню при клике на overlay
+  if (menuOverlay) {
+    menuOverlay.addEventListener('click', toggleMenu);
+  }
+  
+  // Закрытие меню при клике на пункт навигации
+  document.querySelectorAll('.menu-nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const section = document.querySelector(href);
+        if (section) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        }
+      }
+      toggleMenu();
+    });
+  });
+  
+  // Закрытие меню по Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isMenuOpen) {
+      toggleMenu();
+    }
+  });
+
+  // ИСПРАВЛЕННАЯ ПОДСВЕТКА УЗОРА
+  // Обработчик на document вместо mainMenu для работы поверх header
+  document.addEventListener('mousemove', function(e) {
+    // Проверяем, что меню открыто
+    if (!isMenuOpen || !mainMenu || !menuPattern) return;
+    
+    const rect = mainMenu.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Создаем радиальный градиент с фиолетовым свечением в точке курсора
+    const gradientX = (x / rect.width) * 100;
+    const gradientY = (y / rect.height) * 100;
+    
+    menuPattern.style.background = `
+      radial-gradient(circle at ${gradientX}% ${gradientY}%, 
+        rgba(139, 92, 246, 0.8) 0%, 
+        rgba(139, 92, 246, 0.4) 20%, 
+        transparent 40%
+      ),
+      url('src/assets/icons/pattern.svg')
+    `;
+    menuPattern.style.backgroundSize = 'cover, contain';
+    menuPattern.style.backgroundPosition = 'center, center';
+    menuPattern.style.backgroundRepeat = 'no-repeat, no-repeat';
+  });
+  
+  // Возвращаем узор в исходное состояние при закрытии меню
+  document.addEventListener('click', function(e) {
+    if (!isMenuOpen && menuPattern) {
+      menuPattern.style.background = 'url("src/assets/icons/pattern.svg")';
+      menuPattern.style.backgroundSize = 'contain';
+      menuPattern.style.backgroundPosition = 'center';
+      menuPattern.style.backgroundRepeat = 'no-repeat';
+    }
+  });
+});
+</script>
+
+<style>
+  @import './header.module.scss';
+</style>

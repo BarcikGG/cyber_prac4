@@ -1,0 +1,109 @@
+@import '@styles/variables.scss';
+
+.statistic {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 90px;
+    width: 33%;
+  
+    border-right: 1px solid $secondary-darkest-gray;
+  
+    &:last-child {
+      border-right: none;
+    }
+}
+  
+.text {
+    text-align: center;
+    color: $text-white;
+  
+    h1 {
+      font-weight: 400;
+      font-size: 60px;
+      margin-bottom: 32px;
+    }
+  
+    h2 {
+      font-weight: 500;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+  
+    p {
+      color: $text-gray;
+      font-weight: 400;
+      font-size: 14px;
+    }
+}
+  
+.black-circle {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+  
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-color: $main-black;
+}
+  
+.circle {
+    margin-bottom: 42px;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 2px solid #47474A;
+    background: radial-gradient(circle, $text-dark-gray 0%, #000000 100%);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.1s ease;
+      
+      // Для положительных значений - градиент по часовой стрелке с верхней точки
+      background: conic-gradient(
+        from 0deg,
+        $main-ultra-violet 0%,
+        $main-soft-violet calc(var(--progress, 0%) * 0.25),
+        $main-light-pink var(--progress, 0%),
+        transparent var(--progress, 0%)
+      );
+    }
+    
+    &.animate {
+      &::before {
+        opacity: 1;
+      }
+    }
+    
+    &.negative {
+      &::before {
+        // Для отрицательных значений - заполняем только маленькую часть
+        background: conic-gradient(
+          from 0deg,
+          $main-ultra-violet 0%,
+          $main-soft-violet calc((100% - var(--progress, 0%)) * 0.25),
+          $main-light-pink calc(100% - var(--progress, 0%)),
+          transparent calc(100% - var(--progress, 0%))
+        );
+        transform: scaleX(-1);
+      }
+    }
+}
+  
+@keyframes fillProgress {
+    from {
+      --progress: 0%;
+    }
+    to {
+      --progress: var(--target-progress);
+    }
+}

@@ -1,0 +1,244 @@
+@import '@styles/variables.scss';
+
+.title {
+    font-weight: 500;
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    margin-bottom: 60px;
+    color: $text-white;
+}
+
+.steps-container {
+    top: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid $secondary-darkest-gray;
+    padding: 52px;
+    z-index: 2;
+
+    overflow: hidden;
+    position: relative;
+}
+
+.circle-container {
+    position: relative;
+    width: 85%;
+    aspect-ratio: 1;
+
+    max-width: 500px;
+    margin: 0 auto;
+
+    border-radius: 50%;
+    background: radial-gradient(#363636, #1A1A1A45 70%);
+    border: 2px solid $secondary-darkest-gray;
+    z-index: 2;
+}
+
+.circle-block {
+    align-items: center;
+}
+
+.circle-svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.segment {
+    fill: none;
+    stroke-width: 18;
+    transition: all $transition-slow;
+    opacity: .1;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.3));
+}
+
+.active-segment {
+    transition: all $transition-slow;
+    opacity: 1;
+}
+
+.segment-01 {
+    stroke: $main-ultra-violet;
+}
+
+.segment-02 {
+    stroke: $main-light-pink;
+}
+
+.segment-03 {
+    stroke: $main-soft-violet;
+}
+
+.segment-04 {
+    stroke: $secondary-light-green;
+}
+
+.segment-05 {
+    stroke: $secondary-bright-blue;
+}
+
+.center-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: $text-white;
+    z-index: 10;
+}
+
+.center-title {
+    font-size: 60px;
+    font-weight: 300;
+}
+
+.center-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.segment-label {
+    position: absolute;
+    width: 49px;
+    height: 49px;
+
+    align-content: center;
+    text-align: center;
+    color: $text-white;
+    font-weight: 300;
+    font-size: 16px;
+
+    background: rgba(23, 23, 23, 0.3);
+    backdrop-filter: blur(10px);
+
+    border-radius: 12px;
+    border: 2px solid $secondary-darkest-gray;
+    transform: translate(-50%, -50%);
+}
+
+.flash {
+    position: absolute;
+    width: 40%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all $transition-slow;
+    z-index: 0;
+    filter: blur(100px);
+}
+
+.active-light {
+    transition: all $transition-slow;
+    opacity: .8;
+}
+
+.flash-01 {
+    top: 2%;
+    right: 10%;
+    background-color: $main-ultra-violet;
+}
+
+.flash-02 {
+    top: 40%;
+    right: 2%;
+    background-color: $main-light-pink;
+}
+
+.flash-03 {
+    bottom: 0;
+    right: 30%;
+    background-color: $main-soft-violet;
+}
+
+.flash-04 {
+    top: 40%;
+    left: 2%;
+    background-color: $secondary-light-green;
+}
+
+.flash-05 {
+    top: 2%;
+    left: 10%;
+    background-color: $secondary-bright-blue;
+}
+
+.label-01 {
+    top: 14%;
+    right: 10%;
+}
+
+.label-02 {
+    bottom: 20%;
+    right: -2%;
+}
+
+.label-03 {
+    bottom: -7%;
+    left: 50%;
+}
+
+.label-04 {
+    bottom: 20%;
+    left: 8%;
+}
+
+.label-05 {
+    top: 14%;
+    left: 20%;
+}
+
+
+// second section
+.step-numbers {
+    display: flex;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: $text-gray;
+
+    .step {
+        border: 1px solid $secondary-darkest-gray;
+        border-radius: 99px;
+        transition: all $transition-slow;
+        padding: 10px 16px;
+    }
+
+    .step-title {
+        display: none;
+    }
+
+    .step.active .step-title {
+        display: inline;
+    }
+
+    .active {
+        transition: all $transition-slow;
+        border-color: $main-ultra-violet;
+        color: $text-white;
+        background-color: $main-ultra-violet;
+    }
+}
+
+.info {
+    margin-top: auto;
+
+    h1 {
+        font-weight: 400;
+        margin-bottom: 32px;
+        font-size: 36px;
+        color: $text-white;
+    }
+
+    p {
+        font-size: 18px;
+        font-weight: 400;
+        color: $text-gray;
+    }
+}

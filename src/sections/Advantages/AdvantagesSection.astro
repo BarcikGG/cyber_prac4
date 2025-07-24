@@ -1,0 +1,59 @@
+---
+import AdvatageCard from "@components/AdvantageCard/AdvatageCard.astro";
+---
+
+<section class="container" id="advantages">
+    <h1 class="title">Ключевые преимущества платформы</h1>
+
+    <div class="cards">
+        <div class="a">
+            <AdvatageCard icon="ai" title="AI & ML мониторинг" description="Интеллектуальное отслеживание изменений и выявление угроз."/>
+        </div>
+        <div class="b">
+            <AdvatageCard icon="scan" title="Гибкое сканирование" description="Гибкое и быстрое сканирование любой инфраструктуры."/>
+        </div>
+        <div class="c">
+            <AdvatageCard icon="support" title="Экспертная поддержка" description="Red Team помогает анализировать и исправлять уязвимости."/>
+        </div>
+
+        <div class="d">
+            <AdvatageCard icon="key" title="Создано профессионалами" description="Многолетний опыт пентестов и Bug Bounty - в одном решении."/>
+        </div>
+        <div class="e">
+            <AdvatageCard icon="death" title="Приоритезация рисков" description="Фокус только на критичных бизнес-рисках."/>
+        </div>
+        <div class="g">
+            <AdvatageCard icon="search" title="Контроль устранения" description="Ручная и автоматическая проверка устранения уязвимости."/>
+        </div>
+    </div>
+</section>
+
+<style>
+    @import './Advantages.module.scss';
+</style>
+
+<script>
+  if (typeof window !== "undefined") {
+    const cards = document.querySelector('.cards');
+    cards?.addEventListener('mousemove', (e) => {
+      const event = e as MouseEvent;
+      const target = (event.target as HTMLElement).closest('.card') as HTMLElement | null;
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('active');
+      });
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        target.style.setProperty('--x', `${x}px`);
+        target.style.setProperty('--y', `${y}px`);
+        target.classList.add('active');
+      }
+    });
+    cards?.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('active');
+      });
+    });
+  }
+</script>

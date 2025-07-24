@@ -1,0 +1,95 @@
+---
+export interface Props {
+  percent: string;
+  title: string;
+  description: string;
+}
+
+const { percent, title, description } = Astro.props;
+
+const match = percent.match(/^([+-])(\d+)%$/);
+const sign = match ? match[1] : '+';
+const value = match ? parseInt(match[2]) : 0;
+const isNegative = sign === '-';
+const progress = value;
+---
+
+<div class="statistic">
+  <div
+    class={`circle${isNegative ? ' negative' : ''}`}
+    style={`--target-progress: ${progress}%; --direction: ${isNegative ? -1 : 1};`}
+  >
+    <div class="black-circle"></div>
+  </div>
+  <div class="text">
+    <h1>{percent}</h1>
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+</div>
+
+<style>
+  @import './circle.module.scss';
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const section = document.querySelector('.stats');
+    const circles = section?.querySelectorAll<HTMLElement>('.circle');
+
+    function animateCircle(circle: HTMLElement) {
+      const target = Math.abs(parseInt(circle.style.getPropertyValue('--target-progress'))) || 0;
+      let current = 0;
+      const duration = 1600;
+      const start = performance.now();
+
+      function animate(time: any) {
+        const elapsed = time - start;
+        const linear = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - linear, 3);
+        const value = (ease * target).toFixed(1);
+        circle.style.setProperty('--progress', `${value}%`);
+        if (linear < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          circle.style.setProperty('--progress', `${target}%`);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function onScroll() {
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+        const percentVisible = visibleHeight / rect.height;
+
+        if (percentVisible > 0.5) {
+          circles?.forEach(circle => {
+            if (!circle.classList.contains('animate')) {
+              circle.classList.add('animate');
+              // Явно устанавливаем начальное значение в 0% перед анимацией
+              circle.style.setProperty('--progress', '0%');
+              // Небольшая задержка для корректной установки начального значения
+              setTimeout(() => animateCircle(circle), 10);
+            }
+          });
+        } else {
+          circles?.forEach(circle => {
+            circle.classList.remove('animate');
+            circle.style.setProperty('--progress', '0%');
+          });
+        }
+      }
+    }
+
+    // Инициализация - устанавливаем все прогрессы в 0%
+    circles?.forEach(circle => {
+      circle.style.setProperty('--progress', '0%');
+    });
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  });
+</script>

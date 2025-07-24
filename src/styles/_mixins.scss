@@ -1,0 +1,32 @@
+@import 'variables.scss';
+
+@mixin back_img($url) {
+    display: inline-block;
+    background-image: url($url);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@mixin outline_button($padding-vert: 16px, $padding-hor: 32px, $bgc: $main-black) {
+    background-color: $bgc;
+    border: 1px solid $border-white-20;
+    border-radius: 8px;
+    color: $text-white;
+    padding: $padding-vert $padding-hor;
+  
+    transition: $transition-normal;
+  
+    span {
+        vertical-align: middle;
+    }
+
+    &:hover {
+        background-color: $secondary-darkest-gray;
+    }
+
+    &:disabled {
+        opacity: .3;
+        cursor: not-allowed;
+    }
+}

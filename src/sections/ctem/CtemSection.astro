@@ -1,0 +1,48 @@
+<section class="container">
+  <div class="ctem-logo">
+    <div class="ctem-letter c" data-word="sub_1"></div>
+    <div class="ctem-letter t" data-word="sub_2"></div>
+    <div class="ctem-letter e" data-word="sub_3"></div>
+    <div class="ctem-letter m" data-word="sub_4"></div>
+  </div>
+  <div class="ctem-subtitle">
+    <span class="sub_1">Continuous</span>
+    <span class="sub_2">Threat</span>
+    <span class="sub_3">Exposure</span>
+    <span class="sub_4">Management</span>
+  </div>
+</section>
+
+<style>
+  @import './Ctem.module.scss';
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (): void => {
+    const letters: NodeListOf<HTMLElement> = document.querySelectorAll('.ctem-letter');
+    
+    letters.forEach((letter: HTMLElement): void => {
+      letter.addEventListener('mouseenter', (event: MouseEvent): void => {
+        const target = event.currentTarget as HTMLElement;
+        const wordClass: string | null = target.getAttribute('data-word');
+        if (wordClass) {
+          const wordElement: HTMLElement | null = document.querySelector(`.${wordClass}`);
+          if (wordElement) {
+            wordElement.classList.add('active');
+          }
+        }
+      });
+      
+      letter.addEventListener('mouseleave', (event: MouseEvent): void => {
+        const target = event.currentTarget as HTMLElement;
+        const wordClass: string | null = target.getAttribute('data-word');
+        if (wordClass) {
+          const wordElement: HTMLElement | null = document.querySelector(`.${wordClass}`);
+          if (wordElement) {
+            wordElement.classList.remove('active');
+          }
+        }
+      });
+    });
+  });
+</script>

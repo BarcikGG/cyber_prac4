@@ -1,0 +1,54 @@
+name: Deploy Astro Landing
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Docker image
+      run: |
+        docker build --platform linux/amd64 -t astro-landing:latest .
+        
+    - name: Save Docker image
+      run: |
+        docker save astro-landing:latest -o astro-landing.tar
+        
+    - name: Copy image to server
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        source: "astro-landing.tar"
+        target: "/home/debian/"
+        
+    - name: Deploy on server
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          sudo docker stop astro-landing 2>/dev/null || true
+          sudo docker rm astro-landing 2>/dev/null || true
+          
+          sudo docker rmi astro-landing:latest 2>/dev/null || true
+          
+          sudo docker load -i astro-landing.tar
+          
+          sudo docker run -d --name astro-landing --restart unless-stopped -p 3000:3000 astro-landing:latest
+          
+          rm -f astro-landing.tar
+          
+          sudo docker ps | grep astro-landing

@@ -1,0 +1,57 @@
+// === Цвета из макета ===
+// MAIN
+$main-ultra-violet: #8752FA;
+$main-soft-violet: #CD82FF;
+$main-light-pink: #FCCDFF;
+$main-black: #000000;
+$main-white: #ffffff;
+
+// SECONDARY
+$secondary-violet-2: #A57CFF;
+$secondary-light-green: #DCFFAE;
+$secondary-bright-blue: #4500F9;
+$secondary-dark-blue: #27045E;
+$secondary-darkest-gray: #232323;
+
+// BORDERS
+$border-violet-50: #C0AAF9;
+$border-white-20: rgba(255,255,255,0.2);
+
+// TEXT
+$text-black: #000000;
+$text-dark-gray: #555663;
+$text-gray: #8D90A5;
+$text-white: #FFFFFF;
+$text-error: #D91543;
+$text-success: #83E674;
+
+// BUTTON
+$button-primary: linear-gradient(135deg, #8752FA 100%, #503194 100%);
+$button-secondary: #000000;
+$button-tertiary: #DCFFAE;
+$button-menu: rgba(0,0,0,0.3);
+
+// Градиенты (примерные значения, уточнить по макету при необходимости)
+$gradient-1: linear-gradient(135deg, #FCCDFF 0%, #8752FA 100%);
+$gradient-2: linear-gradient(135deg, #8752FA 0%, #FCCDFF 100%);
+$gradient-3: linear-gradient(180deg, #232323 0%, #0D0D0D 100%);
+$gradient-4: linear-gradient(135deg, #CD82FF 0%, #8752FA 100%);
+
+// === Шрифты ===
+$font-main: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-size-h1: clamp(2.5rem, 5vw, 4rem);
+$font-size-h2: clamp(2rem, 4vw, 3rem);
+$font-size-h3: clamp(1.5rem, 3vw, 2rem);
+
+// Spacing
+$container-max-width: 1200px;
+
+// Breakpoints
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-large: 1200px;
+
+// Animations
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;

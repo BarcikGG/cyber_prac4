@@ -1,0 +1,25 @@
+---
+import StatCircle from "@components/StatCircle/StatCircle.astro";
+---
+
+<section class="stats">
+  <StatCircle 
+    percent="+70%"
+    title="Видимости активов"
+    description="Находим все активы, включая теневые и забытые"
+  />
+  <StatCircle 
+    percent="-99%"
+    title="Ложных срабатываний"
+    description="Отсутствие ложноположительных угроз после ML-фильтра и ручной проверки"
+  />
+  <StatCircle 
+    percent="-80%"
+    title="Времени жизни уязвимости"
+    description="Уменьшаем среднее время жизни уязвимости на периметре с первой недели"
+  />
+</section>
+
+<style>
+  @import './Stats.module.scss';
+</style>

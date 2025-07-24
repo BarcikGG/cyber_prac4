@@ -1,0 +1,194 @@
+@import '@styles/mixins.scss';
+
+.hero-section {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+// Контейнер для логотипа из частиц
+.hero-logo-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none; // Чтобы не блокировать интерактивность
+    z-index: 1;
+}
+
+// Скрываем оригинальный логотип
+.hero-logo {
+    display: none;
+}
+
+// Контент героя
+.hero-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 80px;
+    position: relative;
+    z-index: 3;
+    opacity: 0; // Изначально скрыт для анимации
+}
+
+.hero-left {
+    color: #fff;
+    max-width: 900px;
+}
+
+.hero-left h1 {
+    font-size: 70px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    line-height: 1;
+}
+
+.hero-left p {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.3;
+}
+  
+.hero-right {
+    display: flex;
+    align-items: flex-end;
+}
+  
+.hero-btn {
+    position: relative;
+    background: linear-gradient(90deg, #8752FA 0%, #503194 100%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    padding: 19px 32px;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    cursor: pointer;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $gradient-4;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        border-radius: inherit;
+    }
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(135, 82, 250, 0.3);
+        
+        &::before {
+            opacity: 1;
+        }
+    }
+    
+    span, * {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.text-btn {
+    display: inline-block;
+    width: 248px;
+    text-align: left;
+}
+  
+.arrow {
+    width: 12px;
+    height: 12px;
+    padding-left: 16px;
+    vertical-align: middle;
+    
+    @include back_img('src/assets/icons/arrow_button.svg');
+}
+
+// Стили для частиц логотипа (будут применяться через JS)
+.logo-particle {
+    will-change: transform, opacity;
+    
+    // Добавляем легкую анимацию мерцания
+    &::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+        border-radius: 50%;
+        opacity: 0;
+        animation: particleShimmer 3s ease-in-out infinite;
+        animation-delay: calc(var(--particle-index, 0) * 0.1s);
+    }
+}
+
+@keyframes particleShimmer {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.5);
+    }
+}
+
+// Эффект свечения логотипа
+.logo-glow {
+    filter: blur(40px);
+    mix-blend-mode: screen;
+}
+
+// Предотвращение скролла во время анимации
+body.animating {
+    overflow: hidden;
+}
+
+// Фоновый градиент для атмосферы
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(135, 82, 250, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+// Дополнительные световые эффекты
+.hero-section::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 800px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(135, 82, 250, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    animation: fadeIn 3s ease-out 2s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}

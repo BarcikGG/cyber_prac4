@@ -1,0 +1,27 @@
+@import '@styles/variables.scss';
+
+.title {
+  font-weight: 500;
+  font-size: 60px;
+
+  margin-bottom: 60px;
+
+  color: $text-white;
+}
+
+.cards {
+  display: grid; 
+  grid-template-columns: 1fr 1fr 1fr 1fr; 
+  grid-template-rows: 1fr 1fr; 
+  gap: 10px 10px; 
+  grid-template-areas: 
+    "a b c ."
+    ". d e g";
+}
+
+.a { grid-area: a; }
+.b { grid-area: b; }
+.c { grid-area: c; }
+.d { grid-area: d; }
+.e { grid-area: e; }
+.g { grid-area: g; }

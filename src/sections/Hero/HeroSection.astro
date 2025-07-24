@@ -1,0 +1,71 @@
+<section class="hero-section container">
+  <div class="hero-logo-container">
+    <!-- Частицы будут добавлены через JavaScript -->
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <h1>Платформа управления<br>внешними угрозами</h1>
+      <p>Получите полный контроль<br>над внешней поверхностью атаки</p>
+    </div>
+    <div class="hero-right">
+      <button class="hero-btn">
+        <span class="text-btn">Попробовать бесплатно</span>
+        <span class="arrow"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  @import './Hero.module.scss';
+</style>
+
+<script>
+  // Импортируем динамически для поддержки SSR
+  let LogoAnimation: any = null;
+  let animation: any = null;
+  
+  // Функция инициализации анимации
+  async function initAnimation() {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      // Динамический импорт для клиентской стороны
+      const { default: LogoAnimationClass } = await import('../../scripts/animationLogo');
+      LogoAnimation = LogoAnimationClass;
+      
+      // Создаем экземпляр анимации
+      animation = new LogoAnimation();
+    } catch (error) {
+      console.warn('Ошибка загрузки анимации логотипа:', error);
+    }
+  }
+  
+  // Функция очистки
+  function cleanup() {
+    if (animation) {
+      animation.destroy();
+      animation = null;
+    }
+  }
+  
+  // Инициализация при загрузке DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimation);
+  } else {
+    initAnimation();
+  }
+  
+  // Очистка при переходе на другую страницу (для Astro)
+  document.addEventListener('astro:before-swap', cleanup);
+  
+  // Очистка при выходе со страницы
+  window.addEventListener('beforeunload', cleanup);
+  
+  // Переинициализация после навигации в Astro
+  document.addEventListener('astro:page-load', () => {
+    cleanup();
+    setTimeout(initAnimation, 100);
+  });
+</script>

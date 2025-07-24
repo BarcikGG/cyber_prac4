@@ -1,0 +1,57 @@
+<section class="container protect-section">
+  <div class="title_wrapper">
+    <h1 id="gradient-text">Непрерывная защита начинается с видимости</h1>
+  </div>
+</section>
+
+<style>
+  @import './Protect.module.scss';
+</style>
+
+<script>
+  // Импортируем анимацию из отдельного файла
+  let GradientTextAnimation: any = null;
+  let gradientAnimation: any = null;
+
+  // Функция инициализации
+  async function initGradientAnimation() {
+    if (typeof window === 'undefined') return;
+    
+    try {
+      // Динамический импорт для клиентской стороны
+      const { default: GradientTextAnimationClass } = await import('../../scripts/gradientTextAnimation');
+      GradientTextAnimation = GradientTextAnimationClass;
+      
+      // Создаем экземпляр анимации
+      gradientAnimation = new GradientTextAnimation();
+    } catch (error) {
+    }
+  }
+
+  // Функция очистки
+  function cleanup() {
+    if (gradientAnimation) {
+      gradientAnimation.destroy();
+      gradientAnimation = null;
+    }
+  }
+
+  // Инициализация при загрузке DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGradientAnimation);
+  } else {
+    initGradientAnimation();
+  }
+
+  // Очистка при переходе на другую страницу (для Astro)
+  document.addEventListener('astro:before-swap', cleanup);
+  
+  // Очистка при выходе со страницы
+  window.addEventListener('beforeunload', cleanup);
+  
+  // Переинициализация после навигации в Astro
+  document.addEventListener('astro:page-load', () => {
+    cleanup();
+    setTimeout(initGradientAnimation, 100);
+  });
+</script>

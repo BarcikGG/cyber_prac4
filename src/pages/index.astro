@@ -1,0 +1,26 @@
+---
+import AdvantagesSection from '@sections/Advantages/AdvantagesSection.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import MenuHeader from '@components/Header/MenuHeader.astro';
+import CtemSection from '@sections/ctem/CtemSection.astro';
+import HeroSection from '@sections/Hero/HeroSection.astro';
+import ProtectSection from '@sections/Protect/ProtectSection.astro';
+import StatsSection from '@sections/Stats/StatsSection.astro';
+import HowWorksSection from '@sections/HowWorks/HowWorksSection.astro';
+---
+
+<MainLayout title="SENTRA">
+  <MenuHeader />
+  <main>
+    <HeroSection />
+    <ProtectSection />
+    <div class="separation_line"/>
+    <CtemSection />
+    <div class="separation_line"/>
+    <StatsSection />
+    <div class="separation_line" style="margin-bottom: 210px;"/>
+    <AdvantagesSection />
+    <div style="margin-bottom: 210px;"/>
+    <HowWorksSection />
+  </main>
+</MainLayout>

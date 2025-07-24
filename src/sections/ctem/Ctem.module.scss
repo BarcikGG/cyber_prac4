@@ -1,0 +1,91 @@
+@import '@styles/variables.scss';
+@import '@styles/mixins.scss';
+
+.container {
+  height: 100vh;
+  width: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.ctem-logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.ctem-letter {
+  width: 210px;
+  height: 250px;
+
+  position: relative;
+  transition: all $transition-slow;
+
+  &:hover {
+    filter: brightness(1.3);
+  }
+}
+
+.ctem-letter::before {
+  content: '';
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, $secondary-violet-2 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0;
+  transition: all $transition-slow;
+  filter: blur(40px);
+}
+
+.ctem-letter:hover::before {
+  width: 320px;
+  height: 320px;
+  opacity: 0.8;
+}
+
+.c {
+  @include back_img('/src/assets/images/c_letter.svg');
+}
+
+.t {
+  @include back_img('/src/assets/images/t_letter.svg');
+}
+
+.e {
+  @include back_img('/src/assets/images/e_letter.svg');
+}
+
+.m {
+  @include back_img('/src/assets/images/m_letter.svg');
+  background-size: cover;
+  margin-left: 15px;
+}
+
+.ctem-subtitle {
+  display: flex;
+  gap: 20px;
+
+  font-weight: 400;
+  font-size: 42px;
+  color: $main-white;
+}
+
+.ctem-subtitle span {
+  opacity: 0.2;
+  transition: all $transition-slow;
+}
+
+.ctem-subtitle .active {
+  opacity: 1 !important;
+}
