@@ -1,30 +1,30 @@
 <header id="main-header">
   <button class="menu_button" id="menu-toggle">
     <span class="menu_button_icon"></span>
-    <span>МЕНЮ</span>
+    <span>MENU</span>
   </button>
   <img src="src/assets/icons/Logo.svg" alt="SENTRA" class="logo">
   <nav>
     <button class="tg_button">
       <span class="tg_button_icon"></span>
     </button>
-    <button class="pilot_button">Запросить пилот</button>
+    <button class="pilot_button">Request Pilot</button>
   </nav>
 </header>
 
-<!-- Основное меню -->
+<!-- Main Menu -->
 <div class="main-menu" id="main-menu">
-  <!-- Фоновый узор -->
+  <!-- Background Pattern -->
   <div class="menu-pattern" id="menu-pattern">
     <span class="pattern"></span>
   </div>
   
   <nav class="menu-nav">
     <ul>
-      <li><a href="#advantages">Преимущества</a></li>
-      <li><a href="#functional">Функционал</a></li>
+      <li><a href="#advantages">Advantages</a></li>
+      <li><a href="#functional">Functionality</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contacts">Контакты</a></li>
+      <li><a href="#contacts">Contacts</a></li>
     </ul>
   </nav>
 </div>
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let isMenuOpen = false;
 
-  // --- СКРЫТИЕ ХЕДЕРА ПРИ СКРОЛЛЕ ---
+  // --- HIDE HEADER ON SCROLL ---
   let lastScrollY = window.scrollY;
   let ticking = false;
   function onScroll() {
@@ -59,20 +59,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   window.addEventListener('scroll', onScroll);
-  // --- КОНЕЦ СКРЫТИЯ ХЕДЕРА ---
+  // --- END OF HIDE HEADER ---
 
-  // Функция открытия/закрытия меню
+  // Function to toggle menu open/close
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
     
     if (isMenuOpen) {
-      // Открываем меню
+      // Open menu
       if (mainHeader) mainHeader.classList.add('menu-open');
       if (menuOverlay) menuOverlay.classList.add('active');
       if (mainMenu) mainMenu.classList.add('active');
       document.body.style.overflow = 'hidden';
       
-      // Анимация появления пунктов меню
+      // Animation for menu items appearance
       setTimeout(() => {
         menuItems.forEach(item => {
           item.classList.add('animate');
@@ -80,30 +80,30 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 200);
       
     } else {
-      // Закрываем меню
+      // Close menu
       if (mainHeader) mainHeader.classList.remove('menu-open');
       if (menuOverlay) menuOverlay.classList.remove('active');
       if (mainMenu) mainMenu.classList.remove('active');
       document.body.style.overflow = '';
       
-      // Убираем анимацию пунктов меню
+      // Remove animation from menu items
       menuItems.forEach(item => {
         item.classList.remove('animate');
       });
     }
   }
 
-  // Обработчики событий
+  // Event handlers
   if (menuToggle) {
     menuToggle.addEventListener('click', toggleMenu);
   }
   
-  // Закрытие меню при клике на overlay
+  // Close menu on overlay click
   if (menuOverlay) {
     menuOverlay.addEventListener('click', toggleMenu);
   }
   
-  // Закрытие меню при клике на пункт навигации
+  // Close menu on navigation item click
   document.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
@@ -120,24 +120,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Закрытие меню по Escape
+  // Close menu on Escape key
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && isMenuOpen) {
       toggleMenu();
     }
   });
 
-  // ИСПРАВЛЕННАЯ ПОДСВЕТКА УЗОРА
-  // Обработчик на document вместо mainMenu для работы поверх header
+  // FIXED PATTERN HIGHLIGHTING
+  // Event handler on document instead of mainMenu for working above header
   document.addEventListener('mousemove', function(e) {
-    // Проверяем, что меню открыто
+    // Check if menu is open
     if (!isMenuOpen || !mainMenu || !menuPattern) return;
     
     const rect = mainMenu.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Создаем радиальный градиент с фиолетовым свечением в точке курсора
+    // Create radial gradient with purple glow at cursor point
     const gradientX = (x / rect.width) * 100;
     const gradientY = (y / rect.height) * 100;
     
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     menuPattern.style.backgroundRepeat = 'no-repeat, no-repeat';
   });
   
-  // Возвращаем узор в исходное состояние при закрытии меню
+  // Reset pattern to original state when menu is closed
   document.addEventListener('click', function(e) {
     if (!isMenuOpen && menuPattern) {
       menuPattern.style.background = 'url("src/assets/icons/pattern.svg")';
