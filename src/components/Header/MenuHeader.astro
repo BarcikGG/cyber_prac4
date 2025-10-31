@@ -12,13 +12,10 @@
   </nav>
 </header>
 
-<!-- Основное меню -->
 <div class="main-menu" id="main-menu">
-  <!-- Фоновый узор -->
   <div class="menu-pattern" id="menu-pattern">
     <span class="pattern"></span>
   </div>
-  
   <nav class="menu-nav">
     <ul>
       <li><a href="#advantages">Преимущества</a></li>
@@ -40,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let isMenuOpen = false;
 
-  // --- СКРЫТИЕ ХЕДЕРА ПРИ СКРОЛЛЕ ---
   let lastScrollY = window.scrollY;
   let ticking = false;
   function onScroll() {
@@ -59,20 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   window.addEventListener('scroll', onScroll);
-  // --- КОНЕЦ СКРЫТИЯ ХЕДЕРА ---
 
-  // Функция открытия/закрытия меню
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
     
     if (isMenuOpen) {
-      // Открываем меню
       if (mainHeader) mainHeader.classList.add('menu-open');
       if (menuOverlay) menuOverlay.classList.add('active');
       if (mainMenu) mainMenu.classList.add('active');
       document.body.style.overflow = 'hidden';
       
-      // Анимация появления пунктов меню
       setTimeout(() => {
         menuItems.forEach(item => {
           item.classList.add('animate');
@@ -80,30 +72,25 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 200);
       
     } else {
-      // Закрываем меню
       if (mainHeader) mainHeader.classList.remove('menu-open');
       if (menuOverlay) menuOverlay.classList.remove('active');
       if (mainMenu) mainMenu.classList.remove('active');
       document.body.style.overflow = '';
       
-      // Убираем анимацию пунктов меню
       menuItems.forEach(item => {
         item.classList.remove('animate');
       });
     }
   }
 
-  // Обработчики событий
   if (menuToggle) {
     menuToggle.addEventListener('click', toggleMenu);
   }
   
-  // Закрытие меню при клике на overlay
   if (menuOverlay) {
     menuOverlay.addEventListener('click', toggleMenu);
   }
   
-  // Закрытие меню при клике на пункт навигации
   document.querySelectorAll('.menu-nav a').forEach(link => {
     link.addEventListener('click', function(e) {
       e.preventDefault();
@@ -120,24 +107,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Закрытие меню по Escape
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape' && isMenuOpen) {
       toggleMenu();
     }
   });
 
-  // ИСПРАВЛЕННАЯ ПОДСВЕТКА УЗОРА
-  // Обработчик на document вместо mainMenu для работы поверх header
   document.addEventListener('mousemove', function(e) {
-    // Проверяем, что меню открыто
     if (!isMenuOpen || !mainMenu || !menuPattern) return;
     
     const rect = mainMenu.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Создаем радиальный градиент с фиолетовым свечением в точке курсора
     const gradientX = (x / rect.width) * 100;
     const gradientY = (y / rect.height) * 100;
     
@@ -154,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
     menuPattern.style.backgroundRepeat = 'no-repeat, no-repeat';
   });
   
-  // Возвращаем узор в исходное состояние при закрытии меню
   document.addEventListener('click', function(e) {
     if (!isMenuOpen && menuPattern) {
       menuPattern.style.background = 'url("src/assets/icons/pattern.svg")';
